@@ -5,26 +5,23 @@ from django.contrib.auth import get_user_model
 class ModelTests(TestCase):
 
     def test_create_user_with_email(self):
-        ##Test creating a new user successfull
+        # Test creating a new user successfull
         email = 'test@colombiaappdev.com'
         password = 'Testpass123'
-
         user = get_user_model().objects.create_user(
-            email = email,
-            password = password)
-
+                                                    email=email,
+                                                    password=password)
         self.assertEqual(user.email, email)
         self.assertTrue(user.check_password(password))
 
-
     def test_email_normalized(self):
-        ##Test of normalizing the email to lower case
+        # Test of normalizing the email to lower case
         email = 'test@COLOMB.COM'
         user = get_user_model().objects.create_user(email, 'test123')
         self.assertEqual(user.email, email.lower())
 
     def test_user_invalid_email(self):
-        ##Test creating user with no email raises error
+        # Test creating user with no email raises error
         with self.assertRaises(ValueError):
             get_user_model().objects.create_user(None, 'test123')
             get_user_model().objects.create_user("", 'test123')
