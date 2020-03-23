@@ -18,6 +18,14 @@ class ModelTests(TestCase):
 
 
     def test_email_normalized(self):
+        ##Test of normalizing the email to lower case
         email = 'test@COLOMB.COM'
         user = get_user_model().objects.create_user(email, 'test123')
         self.assertEqual(user.email, email.lower())
+
+    def test_user_invalid_email(self):
+        ##Test creating user with no email raises error
+        with self.assertRaises(ValueError):
+            get_user_model().objects.create_user(None, 'test123')
+            get_user_model().objects.create_user("", 'test123')
+            get_user_model().objects.create_user(" ", 'test123')

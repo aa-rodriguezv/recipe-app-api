@@ -6,6 +6,13 @@ class UserManager(BaseUserManager):
     def create_user(self, email, password =None, **extra_fields):
         ##Create and saves a new user
         user = self.model(email = self.normalize_email(email), **extra_fields)
+
+        if email == " " or (email is None):
+            raise ValueError('Plase enter an email')
+        elif email.find("@") == -1:
+            raise ValueError('Email is not Valid')
+
+
         user.set_password(password)
         user.save(using = self._db)
 
